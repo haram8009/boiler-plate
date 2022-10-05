@@ -81,6 +81,18 @@ app.get('/api/users/auth', auth , (req, res) => {
   }) // 이렇게 req에 유저 정보를 넘겨주면 어느 페이지에서든 유저정보 이용가능해 편해짐
 })
 
+app.get('/api/users/logout', auth, (req, res) => {
+  User.findOneAndUpdate(
+    {_id: req.user._id}, 
+    { token: ""},
+    (err, user) => {
+      if(err) return res.json({ success : false, err });
+      return res.status(200).send({
+        success: true
+      })
+    })
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
 })
