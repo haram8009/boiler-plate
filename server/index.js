@@ -1,11 +1,10 @@
 const express = require('express')
 const app = express()
-const port = 5000 // 이건 아무거나 써도 되는데 우린 5000쓰자
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const config = require('./config/key');
 const{ auth } = require("./middleware/auth");
-const { User } = require("./models/User.js"); // 이렇게 가져와야 쓸 수 있음
+const { User } = require("./models/User"); // 이렇게 가져와야 쓸 수 있음
 
 // 클라이언트에서 보내는 정보를 분석해서 서버에서 가져올 수 있게해줌
 // application/x-www-form-urlencoded 타입
@@ -21,6 +20,11 @@ mongoose.connect(config.mongoURI,{
 
 app.get('/', (req, res) => {
   res.send('Hello World! 오늘 하루도 행복하세요~')
+})
+
+
+app.get('/api/hello', (req, res) => {
+  res.send("안녕하세요 ~ ")
 })
 
 app.post('/api/users/register', (req, res) => {
@@ -93,6 +97,7 @@ app.get('/api/users/logout', auth, (req, res) => {
     })
 })
 
+const port = 5000 // 이건 아무거나 써도 되는데 우린 5000쓰자
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
 })
